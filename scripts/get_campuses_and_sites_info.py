@@ -4,6 +4,7 @@ from pathlib import Path
 import pandas as pd
 
 SCRIPT_DIR=Path(__file__).resolve().parent
+ARCHIVE_DIR=SCRIPT_DIR.parent / "data" / "archive"
 DATA_DIR=SCRIPT_DIR.parent / "data" / "unisolar"
 OUTPUT_FILE=SCRIPT_DIR / "campus_and_site_info.txt"
 
