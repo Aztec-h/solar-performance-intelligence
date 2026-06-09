@@ -6,24 +6,59 @@
 
 ```text
 .
-├── archive
-│   ├── building_consumption.csv
-│   ├── building_meta.csv
-│   ├── building_submeter_consumption.csv
-│   ├── calender.csv
-│   ├── campus_meta.csv
-│   ├── events.csv
-│   ├── gas_consumption.csv
-│   ├── nmi_consumption.csv
-│   ├── nmi_meta.csv
-│   ├── water_consumption.csv
-│   └── weather_data.csv
-└── unisolar
-    ├── Monthly_Summary_Solar.csv
-    ├── Solar_Energy_Generation.csv
-    ├── Solar_Irradiance.csv
-    ├── Solar_Site_Details.csv
-    └── Weather_Data_reordered_all.csv
+├── data
+│   ├── interim
+│   ├── processed
+│   └── raw
+│       ├── Monthly_Summary_Solar.csv
+│       ├── Solar_Energy_Generation.csv
+│       ├── Solar_Irradiance.csv
+│       ├── Solar_Site_Details.csv
+│       └── Weather_Data_reordered_all.csv
+├── scripts
+│   └── run_pipeline.bat
+├── src
+│   ├── __pycache__
+│   │   └── __init__.cpython-311.pyc
+│   ├── config
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── constants.cpython-311.pyc
+│   │   │   └── settings.cpython-311.pyc
+│   │   ├── __init__.py
+│   │   ├── constants.py
+│   │   └── settings.py
+│   ├── data
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── loader.cpython-311.pyc
+│   │   │   ├── transformer.cpython-311.pyc
+│   │   │   └── validator.cpython-311.pyc
+│   │   ├── __init__.py
+│   │   ├── cleaner.py
+│   │   ├── loader.py
+│   │   ├── merger.py
+│   │   ├── transformer.py
+│   │   └── validator.py
+│   ├── features
+│   │   ├── __init__.py
+│   │   └── engineer.py
+│   ├── pipelines
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   └── build_master_dataset.cpython-311.pyc
+│   │   ├── __init__.py
+│   │   └── build_master_dataset.py
+│   ├── utils
+│   │   ├── __init__.py
+│   │   ├── datetime_utils.py
+│   │   ├── io.py
+│   │   └── logger.py
+│   └── __init__.py
+├── .gitignore
+├── LICENSE
+├── README.md
+└── solar-power-generation-and-energy-consumption-data.zip
 ```
 
 - <b>columns of each CSVs</b>
