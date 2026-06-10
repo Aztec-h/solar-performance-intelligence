@@ -4,19 +4,23 @@ import pandas as pd
 class DataCleaner:
 
     @staticmethod
-    def analyze_missingness(df):
-
-        report = pd.DataFrame({
-            "missing_count": df.isnull().sum()
-        })
-
-        report["missing_pct"] = (
-            report["missing_count"]
-            / len(df)
-            * 100
+    def clean_geneartion(df):
+        
+        df = df.copy()
+        
+        df["Hour"] = (
+            df["Timestamp"]
+            .dt.hour
         )
-
-        return report.sort_values(
-            by="missing_pct",
-            ascending=False
+        
+        night_mask = (
+            (df["Hour"] < 7) | (df["Hour"] > 19)
         )
+        
+        df.loc[
+            night_mask &
+            df["SolarGeneration"].isna(),
+            "SolarGeneration"
+        ] = 0
+        
+        return df
