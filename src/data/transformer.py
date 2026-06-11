@@ -2,6 +2,8 @@ import pandas as pd
 
 from src.config.constants import CAMPUS_MAP
 
+LOCAL_TIMEZONE = "Australia/Melbourne"
+
 class DataTransformer:
     
     @staticmethod
@@ -44,8 +46,13 @@ class DataTransformer:
             .map(CAMPUS_MAP)
         )
         
-        df['Timestamp'] = pd.to_datetime(
-            df['Timestamp_UTC']
+        df['Timestamp'] = (
+            pd.to_datetime(
+                df['Timestamp_UTC'],
+                utc=True
+            )
+            .dt.tz_convert(LOCAL_TIMEZONE)
+            .dt.tz_localize(None)
         )
         
         df = df.drop(

@@ -1,0 +1,4 @@
+Timestamp,SolarGeneration,Ghi,CloudOpacity,AirTemperature,RelativeHumidity,WindSpeed,kWp
+2020,0.872,0.962,0.962,0.944,0.944,0.927,0.559
+2021,0.887,1.0,1.0,0.752,0.752,0.536,0.599
+2022,0.921,0.999,0.999,0.504,0.504,0.0,0.595

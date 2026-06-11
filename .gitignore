@@ -222,3 +222,5 @@ __marimo__/
 solar-power-generation-and-energy-consumption-data.zip
 data/archive/
 data/archive/*
+data/interim/*
+data/processed/*
