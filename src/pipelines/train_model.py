@@ -211,29 +211,9 @@ def run_experiments(model_df):
 
     experiments = [
         (
-            "dummy_mean",
-            DummyRegressor(strategy="mean"),
-            baseline_numeric + categorical_features,
-        ),
-        (
-            "ridge_baseline_no_wind",
-            make_ridge_pipeline(baseline_numeric, categorical_features),
-            baseline_numeric + categorical_features,
-        ),
-        (
-            "hgb_baseline_no_wind",
-            make_hgb_pipeline(baseline_numeric, categorical_features),
-            baseline_numeric + categorical_features,
-        ),
-        (
-            "hgb_engineered_no_wind",
+            "final_model",
             make_hgb_pipeline(engineered_numeric, categorical_features),
             engineered_numeric + categorical_features,
-        ),
-        (
-            "hgb_engineered_with_wind_missing",
-            make_hgb_pipeline(wind_numeric, categorical_features),
-            wind_numeric + categorical_features,
         ),
     ]
 

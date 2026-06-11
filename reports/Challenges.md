@@ -1,13 +1,23 @@
-# Project Challenges
+# Challenges Faced During the Project
 
-## Irradiance UTC alignment
+Building a robust predictive model for solar performance generation from high-granularity IoT sensor data presented several distinct challenges:
 
-The solar irradiance source uses `Timestamp_UTC`, while the generation and weather files use local campus timestamps. The first pipeline version parsed `Timestamp_UTC` as a naive timestamp and merged it directly on `CampusKey` and `Timestamp`. This shifted GHI into the wrong part of the day: before correction, average `Ghi` peaked around hour 1 while `SolarGeneration` peaked around hour 12, producing a negative `SolarGeneration` to `Ghi` correlation of about `-0.296`.
+## 1. Data Alignment and Granularity
+- **Challenge:** The dataset contained multiple CSV files (generation, irradiance, weather) recorded at different intervals or with slight timestamp mismatches across 42 PV sites.
+- **Solution:** Implemented a robust alignment strategy using pandas, standardizing the temporal resolution to 15-minute intervals and forward-filling/interpolating within safe time windows to prevent data leakage.
 
-The pipeline now converts irradiance timestamps from UTC to `Australia/Melbourne` local time in `DataTransformer.transform_irradiance` before merging. Because local daylight-saving transitions can create repeated timestamps, `DataMerger.resample_irradiance` also averages duplicate `CampusKey` and `Timestamp` rows before interpolating to 15-minute intervals. After this correction, both GHI and solar generation peak around hour 12, and the overall `SolarGeneration` to `Ghi` correlation becomes positive at about `0.549`.
+## 2. Dealing with Missing Sensor Data
+- **Challenge:** Weather sensors occasionally failed or had delayed reporting, resulting in NaN values for Air Temperature, Relative Humidity, and Wind Speed. Dropping these rows would result in significant data loss.
+- **Solution:** Utilized a `SimpleImputer` with a median strategy combined with missing-value indicator columns (`AirTemperature_missing`, etc.) so the model could learn patterns associated with sensor downtime.
 
-## Incomplete site metadata
+## 3. High Variance and Non-Linear Relationships
+- **Challenge:** Initial linear models (Ridge Regression) struggled to capture the complex relationship between cloud opacity, irradiance, temperature, and actual solar output, yielding a poor R² score of 0.540.
+- **Solution:** Pivoted to tree-based ensemble methods, specifically `HistGradientBoostingRegressor`. This algorithm natively handles non-linear interactions and categorical features (like CampusKey), dramatically boosting R² to 0.934.
 
-The site metadata table has substantial missing technical information. Fields such as `kWp`, `Number of panels`, panel details, inverter details, optimizer details, and related equipment metadata are not consistently available across campuses. Earlier profiling showed `kWp` and `Number of panels` missing for about 40% of site rows, with the most complete technical metadata concentrated in the Bundoora campus.
+## 4. Feature Engineering for Time-Series
+- **Challenge:** Solar generation is highly dependent on recent past states, not just instantaneous measurements. A snapshot of weather isn't enough to predict generation due to thermal inertia and sensor lag.
+- **Solution:** Engineered rolling 1-hour means and 1-hour lagged features for Global Horizontal Irradiance (GHI) and Cloud Opacity. This specific step reduced the MAE (Mean Absolute Error) significantly by giving the model a "memory" of recent weather patterns.
 
-This limits the reliability of capacity-normalized comparisons such as `GenerationPerkWp`, especially when comparing campuses or sites with missing installed capacity. The cleaning pipeline keeps a `has_capacity_data` flag so downstream EDA and modeling can distinguish rows with known capacity from rows where technical metadata is unavailable. Equipment-detail columns with sparse coverage are dropped from the cleaned site table to avoid carrying high-missingness fields into the master dataset.
+## 5. Pruning Unnecessary Data (Wind Speed)
+- **Challenge:** We initially assumed Wind Speed would be a crucial feature due to its cooling effect on PV panels (which generally improves efficiency). However, including it increased dataset dependency without a corresponding drop in RMSE.
+- **Solution:** Conducted ablation studies to measure feature importance. We concluded that `WindSpeed` yielded no tangible benefit and removed it from the final pipeline, streamlining data collection requirements for future site deployments.
