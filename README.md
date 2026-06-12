@@ -47,12 +47,26 @@ We make use of the [UNISOLAR Dataset](https://www.kaggle.com/datasets/pythonafro
 
 In addition to the raw features, we engineered several time-series specific features (1-hour lags, 1-hour rolling means for GHI and Cloud Opacity) and temporal indicators (is_daylight, Hour, Quarter) to improve predictive accuracy.
 
+## Environment Setup
+To Setup the environment "solar-perf-intel" in windows
+1. Run the setup script:
+   ```cmd
+   scripts\run_setup.bat
+   ```
+
 ## Running the Pipeline
 To execute the data processing and model training pipeline:
 1. Ensure the raw CSVs are placed in `data/raw/` or the `.zip` file is extracted.
 2. Run the pipeline script:
    ```cmd
    scripts\run_pipeline.bat
+   ```
+
+## Running the streamlit report app
+To run the streamlit app:
+1. Run the app script:
+   ```cmd
+   scripts\run_app.py
    ```
 
 ## References
