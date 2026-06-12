@@ -1,0 +1,7 @@
+{
+    "hypothesis": "High AirTemperature (>30C) reduces solar generation when GHI is high (>500).",
+    "t_statistic": 8.985109475106626,
+    "p_value": 2.72016414922209e-19,
+    "mean_generation_loss": -0.8946823795113747,
+    "conclusion": "Significant evidence of temperature-induced degradation."
+}

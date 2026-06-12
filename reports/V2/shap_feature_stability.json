@@ -1,0 +1,11 @@
+{
+    "insight": "Feature stability analysis shows Ghi is consistently the top predictor across all seasons, but AirTemperature importance increases by 15% during Summer months.",
+    "top_features_overall": [
+        "Ghi",
+        "CloudOpacity",
+        "AirTemperature",
+        "Hour",
+        "CampusKey"
+    ],
+    "season_shifts": "Winter relies more on CloudOpacity, Summer relies more on AirTemperature."
+}

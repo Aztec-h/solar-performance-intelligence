@@ -61,6 +61,21 @@ To execute the data processing and model training pipeline:
    ```cmd
    scripts\run_pipeline.bat
    ```
+3. To generate the V2 Advanced Analytics reports, run:
+   ```cmd
+   python -m src.pipelines.v2_advanced_analytics
+   ```
+
+## V2 Advanced Analytics
+We have expanded the project beyond predictive modeling into a robust intelligence platform. Key V2 features include:
+- **Feature Stability Analysis** (understanding temporal shifts in feature importance)
+- **Causal Inference & Impact Analysis** (quasi-experimental design to determine causality, e.g., temperature impact)
+- **Temporal & Site Clustering** (identifying operational patterns)
+- **Granular Error Analysis & Segmentation**
+- **Multivariate Policy Analysis** (simulating What-If scenarios like +2°C warming)
+- **Forecasting Uncertainty & Drift Detection**
+
+For full details on the implementations, including alternatives considered and rejected, please view the [V2 Documentation](reports/V2/DOCUMENTATION.md).
 
 ## Running the streamlit report app
 To run the streamlit app:
